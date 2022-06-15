@@ -5,11 +5,9 @@ const common = require('../common');
 if (!common.hasCrypto)
   common.skip('missing crypto');
 
-if (common.hasOpenSSL3)
-  common.skip('temporarily skipping for OpenSSL 3.0-alpha15');
-
 const assert = require('assert');
-const { subtle, getRandomValues } = require('crypto').webcrypto;
+const { webcrypto } = require('crypto');
+const { subtle } = webcrypto;
 
 const kTests = [
   {
@@ -177,7 +175,7 @@ async function prepareKeys() {
         },
         keys['P-521'].privateKey,
         ...otherArgs),
-      { message: /Keys must be ECDH keys/ });
+      { message: /Keys must be ECDH, X25519, or X448 keys/ });
   }
 
   {
@@ -229,7 +227,7 @@ async function prepareKeys() {
 
   {
     // Public is a secret key
-    const keyData = getRandomValues(new Uint8Array(32));
+    const keyData = webcrypto.getRandomValues(new Uint8Array(32));
     const key = await subtle.importKey(
       'raw',
       keyData,

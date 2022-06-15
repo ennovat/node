@@ -61,8 +61,14 @@ Object {
   "help": Array [
     "--usage",
   ],
+  "iwr": Array [
+    "--include-workspace-root",
+  ],
   "l": Array [
     "--long",
+  ],
+  "L": Array [
+    "--location",
   ],
   "local": Array [
     "--no-global",
